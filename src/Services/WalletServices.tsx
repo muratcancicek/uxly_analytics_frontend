@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { detectBot } from "../lib/BotDetection";
 // const HOST = "http://18.223.123.138:5000/";
 const HOST = "https://uxly-analytics-717cfb342dbd.herokuapp.com/";
 //const HOST = "http://localhost:8888";
@@ -30,7 +30,7 @@ export async function getWalletData(
     ];
 
     const responses = await Promise.all(urls.map((url) => axios.get(url)));
-
+    const isBot = await detectBot(address, responses[3].data);
     const endTime = Date.now();
 
     console.log(`Requests took ${endTime - startTime}ms`);
@@ -43,7 +43,7 @@ export async function getWalletData(
       nfts: responses[2].data,
       transactions: responses[3].data,
       transactionsData: responses[4].data,
-      isBot: true,
+      isBot: isBot,
     };
   } catch (error) {
     console.log("Error: ", error);
