@@ -11,6 +11,7 @@ interface WalletData {
   tokenBalance: any;
   transactions: any;
   transactionsData: any;
+  isBot: boolean;
 }
 
 export async function getWalletData(
@@ -42,6 +43,7 @@ export async function getWalletData(
       nfts: responses[2].data,
       transactions: responses[3].data,
       transactionsData: responses[4].data,
+      isBot: true,
     };
   } catch (error) {
     console.log("Error: ", error);
@@ -52,6 +54,7 @@ export async function getWalletData(
       tokenBalance: { tokens: [] },
       transactions: {},
       transactionsData: {},
+      isBot: false,
     };
   }
 }
@@ -74,6 +77,7 @@ export async function getMultipleWalletData(
         tokenBalance: response.data.walletStats.tokenBalance.tokens,
         transactions: response.data.walletStats.transactions,
         transactionsData: response.data.walletStats.transactionsData,
+        isBot: false,
       });
     } catch (error) {
       console.log(`Error fetching wallet data for address ${address}:`, error);
