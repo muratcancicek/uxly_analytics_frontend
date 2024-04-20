@@ -118,14 +118,21 @@ const NetworthGraph: React.FC<NetworthProps> = ({ labels, chainNetWorth, total }
   return (
     <Grid item xs={12}>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
+          <BoxWrapper
+            title={"Is Bot:"}
+            titleSX={{ textAlign: "center" }}
+            value={`Who Knows?`}
+          />
+        </Grid>
+        <Grid item xs={4}>
           <BoxWrapper
             title={"Wallet Value:"}
             titleSX={{ textAlign: "center" }}
             value={`$${totalNetworth}`}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <BoxWrapper
             title={"Wallet Age"}
             titleSX={{ textAlign: "center" }}

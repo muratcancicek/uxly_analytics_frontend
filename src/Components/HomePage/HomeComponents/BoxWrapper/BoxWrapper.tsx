@@ -35,7 +35,7 @@ const BoxWrapper: React.FC<BoxWrapperProps> = ({
         {title}
       </Typography>
       {value ? (
-        <Typography variant="h2" color="white" sx={{ ...valueSX }}>
+        <Typography variant="h5" color="white" sx={{ ...valueSX }}>
           {value}
         </Typography>
       ) : (
