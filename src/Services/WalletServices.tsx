@@ -1,5 +1,5 @@
 import axios from "axios";
-import { detectBot } from "../lib/BotDetection";
+import { estimateBotPossibility } from "../lib/BotDetection";
 // const HOST = "http://18.223.123.138:5000/";
 const HOST = "https://uxly-analytics-717cfb342dbd.herokuapp.com/";
 //const HOST = "http://localhost:8888";
@@ -11,7 +11,7 @@ interface WalletData {
   tokenBalance: any;
   transactions: any;
   transactionsData: any;
-  isBot: boolean;
+  botPossibility: number;
 }
 
 export async function getWalletData(
@@ -30,7 +30,7 @@ export async function getWalletData(
     ];
 
     const responses = await Promise.all(urls.map((url) => axios.get(url)));
-    const isBot = await detectBot(address, responses[3].data);
+    const botPossibility = await estimateBotPossibility(address, responses[3].data);
     const endTime = Date.now();
 
     console.log(`Requests took ${endTime - startTime}ms`);
@@ -43,7 +43,7 @@ export async function getWalletData(
       nfts: responses[2].data,
       transactions: responses[3].data,
       transactionsData: responses[4].data,
-      isBot: isBot,
+      botPossibility: botPossibility,
     };
   } catch (error) {
     console.log("Error: ", error);
@@ -54,7 +54,7 @@ export async function getWalletData(
       tokenBalance: { tokens: [] },
       transactions: {},
       transactionsData: {},
-      isBot: false,
+      botPossibility: 0,
     };
   }
 }
@@ -77,7 +77,7 @@ export async function getMultipleWalletData(
         tokenBalance: response.data.walletStats.tokenBalance.tokens,
         transactions: response.data.walletStats.transactions,
         transactionsData: response.data.walletStats.transactionsData,
-        isBot: false,
+        botPossibility: 0,
       });
     } catch (error) {
       console.log(`Error fetching wallet data for address ${address}:`, error);

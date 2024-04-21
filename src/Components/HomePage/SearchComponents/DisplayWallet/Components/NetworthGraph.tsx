@@ -8,7 +8,7 @@ interface NetworthProps {
   labels: string[];
   chainNetWorth: number[];
   total: string;
-  isBot: boolean;
+  botPossibility: number;
 }
 
 const NumberComponent = ({ numberString }: { numberString: string }): string => {
@@ -24,7 +24,7 @@ const NumberComponent = ({ numberString }: { numberString: string }): string => 
   return addCommasToNumberString(numberString);
 };
 
-const NetworthGraph: React.FC<NetworthProps> = ({ labels, chainNetWorth, total, isBot }) => {
+const NetworthGraph: React.FC<NetworthProps> = ({ labels, chainNetWorth, total, botPossibility }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart>();
   const [isListView, setIsListView] = useState(false);
@@ -121,9 +121,9 @@ const NetworthGraph: React.FC<NetworthProps> = ({ labels, chainNetWorth, total, 
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <BoxWrapper
-            title={"Is Bot:"}
+            title={"Bot Potential:"}
             titleSX={{ textAlign: "center" }}
-            value={`${isBot ? "Yes" : "No"}`}
+            value={`${botPossibility.toFixed(2)}%`}
           />
         </Grid>
         <Grid item xs={4}>
